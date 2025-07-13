@@ -38,13 +38,6 @@ const sidebarNavItems = [
                 iconClass: 'fas fa-book',
                 roles: ['admin', 'teacher', 'student'] 
             },
-            {
-                id: 'settings',
-                label: 'Pengaturan',
-                href: '/settings',
-                iconClass: 'fas fa-cog',
-                roles: ['admin'] 
-            },
         ]
     },
 ];

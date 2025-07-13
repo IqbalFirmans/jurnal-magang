@@ -229,7 +229,7 @@ const TeachersPage = () => {
           />
 
           {filteredTeachers.length > itemsPerPage && (
-            <div className="flex justify-center mt-4 gap-2">
+            <div className="flex justify-end mt-4 gap-2">
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(p => p - 1)}
