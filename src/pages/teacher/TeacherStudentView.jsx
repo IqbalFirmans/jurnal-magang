@@ -13,7 +13,7 @@ const TeacherStudentView = () => {
     const [loading, setLoading] = useState(false);
     const [toast, setToast] = useState({ message: '', type: '', id: null });
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 2;
 
 
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
@@ -72,6 +72,11 @@ const TeacherStudentView = () => {
         return temp;
     }, [students, searchName, filterGender]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchName, filterGender]);
+
+
     const paginatedStudents = useMemo(() => {
         const start = (currentPage - 1) * itemsPerPage;
         return filteredStudents.slice(start, start + itemsPerPage);
@@ -115,25 +120,28 @@ const TeacherStudentView = () => {
                         onViewDetail={handleViewDetail}
                         onDelete={null}
                     />
-                    <div className="flex justify-center mt-4 gap-2">
-                        <button
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(p => p - 1)}
-                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                        >
-                            Prev
-                        </button>
-                        <span className="px-4 py-2 text-gray-700 dark:text-gray-200">
-                            Page {currentPage} of {Math.ceil(filteredStudents.length / itemsPerPage)}
-                        </span>
-                        <button
-                            disabled={currentPage >= Math.ceil(filteredStudents.length / itemsPerPage)}
-                            onClick={() => setCurrentPage(p => p + 1)}
-                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                        >
-                            Next
-                        </button>
-                    </div>
+
+                    {filteredStudents.length > itemsPerPage && (
+                        <div className="flex justify-center mt-4 gap-2">
+                            <button
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(p => p - 1)}
+                                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                            >
+                                Prev
+                            </button>
+                            <span className="px-4 py-2 text-gray-700 dark:text-gray-200">
+                                Page {currentPage} of {Math.ceil(filteredStudents.length / itemsPerPage)}
+                            </span>
+                            <button
+                                disabled={currentPage >= Math.ceil(filteredStudents.length / itemsPerPage)}
+                                onClick={() => setCurrentPage(p => p + 1)}
+                                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </>
             )}
 

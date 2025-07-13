@@ -89,6 +89,11 @@ const AdminStudentView = () => {
         return temp;
     }, [students, filterGender, searchName]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchName, filterGender]);
+
+
     const paginatedStudents = useMemo(() => {
         const start = (currentPage - 1) * itemsPerPage;
         return filteredStudents.slice(start, start + itemsPerPage);
