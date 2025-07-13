@@ -41,7 +41,7 @@ const Sidebar = () => {
         </h1>
         {user && (
           <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
-            Logged in as: <span className="font-semibold">{user.name}</span> (<span className="capitalize">{userRole}</span>) {/* Tampilkan role */}
+            Masuk sebagai: <span className="font-semibold">{user.name}</span> (<span className="capitalize">{userRole}</span>)
           </p>
         )}
       </div>

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useAuthStore } from '../../store/authStore';
 
 const StudentTable = ({ students, onEdit, onViewDetail, onDelete }) => {
+  const user = useAuthStore((state) => state.user);
   const mapGenderToIndonesian = (gender) => {
     if (gender === 'man') {
       return 'Laki-laki';
@@ -30,7 +32,7 @@ const StudentTable = ({ students, onEdit, onViewDetail, onDelete }) => {
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
               Email
             </th>
-            <th scope="col" className="px-6 py-3  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+            <th scope="col" className="px-6 py-3 text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
               Aksi
             </th>
           </tr>
@@ -65,9 +67,9 @@ const StudentTable = ({ students, onEdit, onViewDetail, onDelete }) => {
                   {student.nisn}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                  {mapGenderToIndonesian(student.jenisKelamin)} 
+                  {mapGenderToIndonesian(student.jenisKelamin)}
                 </td>
-                
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                   {student.email}
                 </td>
@@ -79,20 +81,24 @@ const StudentTable = ({ students, onEdit, onViewDetail, onDelete }) => {
                   >
                     Lihat
                   </button>
-                  <button
-                    onClick={() => onEdit(student)}
-                    className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3"
-                    title="Edit Data Siswa"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => onDelete(student.id)}
-                    className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600"
-                    title="Hapus Data Siswa"
-                  >
-                    Hapus
-                  </button>
+                  {user?.role === 'admin' && (
+                    <>
+                      <button
+                        onClick={() => onEdit(student)}
+                        className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 mr-3"
+                        title="Edit Data Siswa"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => onDelete(student.id)}
+                        className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600"
+                        title="Hapus Data Siswa"
+                      >
+                        Hapus
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))

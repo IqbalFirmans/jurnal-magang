@@ -1,7 +1,7 @@
 import DashboardPage from '../pages/DashboardPage';
 import JournalsPage from '../pages/JournalPage';
 import StudentsPage from '../pages/StudentPage';
-import TeachersPage from '../pages/TeacherPage';
+import TeachersPage from '../pages/admin/TeacherPage';
 
 const appRoutes = [
   {

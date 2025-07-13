@@ -28,7 +28,6 @@ const journalApi = {
 
   updateJournal: async (id, formData) => {
     try {
-
       formData.append('_method', 'PUT'); 
       const response = await apiClient.post(`/api/student/journal/update/${id}`, formData, {
         headers: {

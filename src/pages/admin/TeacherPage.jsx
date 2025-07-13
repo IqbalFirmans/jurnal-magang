@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import TeacherTable from '../components/teachers/TeacherTable';
-import TeacherFormModal from '../components/teachers/TeacherFormModal';
-import TeacherDetailModal from '../components/teachers/TeacherDetailModal';
-import ConfirmationModal from '../components/common/ConfirmationModal';
-import ToastNotification from '../components/common/ToastNotification';
-import teacherApi from '../api/teacherApi';
-import InputField from '../components/common/InputField';
+import TeacherTable from '../../components/teachers/TeacherTable';
+import TeacherFormModal from '../../components/teachers/TeacherFormModal';
+import TeacherDetailModal from '../../components/teachers/TeacherDetailModal';
+import ConfirmationModal from '../../components/common/ConfirmationModal';
+import ToastNotification from '../../components/common/ToastNotification';
+import teacherApi from '../../api/teacherApi';
+import InputField from '../../components/common/InputField';
+import SelectField from '../../components/common/SelectField';
 
 
 const TeachersPage = () => {
@@ -23,6 +24,8 @@ const TeachersPage = () => {
 
   const [searchName, setSearchName] = useState('');
   const [filterGender, setFilterGender] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const handleCloseModal = useCallback(() => {
     setIsFormModalOpen(false);
@@ -49,7 +52,7 @@ const TeachersPage = () => {
       const mapped = (Array.isArray(res) ? res : []).map((item) => ({
         id: item.id,
         user_id: item.user_id,
-        namaLengkap: item.name, 
+        namaLengkap: item.name,
         nuptk: item.nuptk,
         tanggalLahir: item.date_of_birth,
         jenisKelamin: item.gender,
@@ -68,6 +71,7 @@ const TeachersPage = () => {
     }
   }, []);
 
+
   useEffect(() => {
     fetchTeachers();
   }, [fetchTeachers]);
@@ -85,6 +89,11 @@ const TeachersPage = () => {
     }
     return temp;
   }, [teachers, filterGender, searchName]);
+
+  const paginatedTeachers = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredTeachers.slice(start, start + itemsPerPage);
+  }, [filteredTeachers, currentPage]);
 
   const handleSearchNameChange = useCallback(e => setSearchName(e.target.value), []);
   const handleGenderChange = useCallback(e => setFilterGender(e.target.value), []);
@@ -180,18 +189,21 @@ const TeachersPage = () => {
             value={searchName}
             onChange={handleSearchNameChange}
           />
-          <select
+          <SelectField
             id="filterGender"
+            label=""
             value={filterGender}
             onChange={handleGenderChange}
-            className="mt-2 sm:mt-0 rounded-md p-2.5 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-          >
-            <option value="">Semua Jenis Kelamin</option>
-            <option value="man">Laki-laki</option>
-            <option value="woman">Perempuan</option>
-          </select>
+            options={[
+              { value: '', label: 'Semua Jenis Kelamin' },
+              { value: 'man', label: 'Laki-laki' },
+              { value: 'woman', label: 'Perempuan' },
+            ]}
+            className="mt-2 sm:mt-0"
+          />
+
           {(filterGender || searchName) && (
-            <button onClick={() => { setFilterGender(''); setSearchName(''); }} className="mt-2 sm:mt-0 px-4 py-2 bg-gray-200 rounded-md">
+            <button onClick={() => { setFilterGender(''); setSearchName(''); }} className="mt-2 sm:mt-0 px-4 py-2 bg-gray-200 rounded-md dark:bg-gray-700 text-gray-900 dark:text-gray-100">
               Reset Filter
             </button>
           )}
@@ -203,12 +215,34 @@ const TeachersPage = () => {
       ) : error ? (
         <p className="text-center text-red-600">Error memuat guru: {error.message}</p>
       ) : (
-        <TeacherTable
-          teachers={filteredTeachers}
-          onEdit={handleEditTeacher}
-          onViewDetail={handleViewDetail}
-          onDelete={handleDeleteClick}
-        />
+        <>
+          <TeacherTable
+            teachers={paginatedTeachers}
+            onEdit={handleEditTeacher}
+            onViewDetail={handleViewDetail}
+            onDelete={handleDeleteClick}
+          />
+
+          <div className="flex justify-center mt-4 gap-2">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(p => p - 1)}
+              className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            >
+              Prev
+            </button>
+            <span className="px-4 py-2 text-gray-700 dark:text-gray-200">
+              Page {currentPage} of {Math.ceil(filteredTeachers.length / itemsPerPage)}
+            </span>
+            <button
+              disabled={currentPage >= Math.ceil(filteredTeachers.length / itemsPerPage)}
+              onClick={() => setCurrentPage(p => p + 1)}
+              className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        </>
       )}
 
       <TeacherFormModal

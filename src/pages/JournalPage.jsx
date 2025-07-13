@@ -3,7 +3,7 @@ import JournalTable from '../components/journals/JournalTable';
 import JournalFormModal from '../components/journals/JournalFormModal';
 import JournalDetailModal from '../components/journals/JournalDetailModal';
 import ConfirmationModal from '../components/common/ConfirmationModal';
-import ToastNotification from '../components/common/ToastNotification'; 
+import ToastNotification from '../components/common/ToastNotification';
 import journalApi from '../api/journalApi';
 
 const JournalsPage = () => {
@@ -35,7 +35,7 @@ const JournalsPage = () => {
   }, []);
 
   const showToast = useCallback((message, type) => {
-    setToast({ message, type, id: Date.now() }); 
+    setToast({ message, type, id: Date.now() });
   }, []);
 
   const handleCloseToast = useCallback(() => {
@@ -59,7 +59,7 @@ const JournalsPage = () => {
     } catch (err) {
       console.error("Error fetching journals:", err.response?.data || err.message);
       setErrorJournals(err);
-      showToast(`Error memuat jurnal: ${err.response?.data?.message || err.message}`, 'error'); 
+      showToast(`Error memuat jurnal: ${err.response?.data?.message || err.message}`, 'error');
     } finally {
       setLoadingJournals(false);
     }
@@ -96,7 +96,7 @@ const JournalsPage = () => {
       let resultJournal;
       if (currentJournal) {
         resultJournal = await journalApi.updateJournal(currentJournal.id, formDataFromModal);
-        showToast('Jurnal berhasil diperbarui!', 'success'); 
+        showToast('Jurnal berhasil diperbarui!', 'success');
       } else {
         resultJournal = await journalApi.storeJournal(formDataFromModal);
         showToast('Jurnal berhasil ditambahkan!', 'success');
@@ -111,11 +111,10 @@ const JournalsPage = () => {
           : null,
         name: resultJournal.name,
         createdAt: `${resultJournal.created_date}T${resultJournal.created_time}Z`,
-        updatedAt: `${
-          resultJournal.updated_date
+        updatedAt: `${resultJournal.updated_date
             ? resultJournal.updated_date + 'T' + resultJournal.updated_time + 'Z'
             : `${resultJournal.created_date}T${resultJournal.created_time}Z`
-        }`,
+          }`,
       };
 
       if (currentJournal) {
@@ -136,7 +135,7 @@ const JournalsPage = () => {
         setFormApiErrors(err.response.data.errors);
         showToast('Validasi gagal. Mohon periksa kembali input Anda.', 'error');
       } else {
-        showToast('Terjadi kesalahan saat menyimpan jurnal: ' + (err.response?.data?.message || 'Terjadi kesalahan tidak dikenal.'), 'error'); 
+        showToast('Terjadi kesalahan saat menyimpan jurnal: ' + (err.response?.data?.message || 'Terjadi kesalahan tidak dikenal.'), 'error');
       }
     } finally {
       setIsSubmittingForm(false);
@@ -170,7 +169,7 @@ const JournalsPage = () => {
       try {
         await journalApi.deleteJournal(journalToDelete);
         setJournals(prevJournals => prevJournals.filter(journal => journal.id !== journalToDelete));
-        showToast('Jurnal berhasil dihapus!', 'success'); 
+        showToast('Jurnal berhasil dihapus!', 'success');
       } catch (err) {
         console.error("Error deleting journal:", err.response?.data || err.message);
         showToast('Gagal menghapus jurnal: ' + (err.response?.data?.message || 'Terjadi kesalahan tidak dikenal.'), 'error'); // <-- Ganti alert
@@ -178,7 +177,7 @@ const JournalsPage = () => {
         handleCloseModal();
       }
     }
-  }, [journalToDelete, handleCloseModal, showToast]); 
+  }, [journalToDelete, handleCloseModal, showToast]);
 
 
   return (
