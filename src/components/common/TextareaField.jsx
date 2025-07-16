@@ -13,7 +13,7 @@ const TextareaField = ({ label, id, placeholder, rows = 3, value, onChange, hasE
         className={`mt-1 block w-full rounded-md border
                    ${hasError ? 'border-red-500 ring-red-500' : 'border-gray-300 dark:border-gray-600'}
                    shadow-sm focus:border-blue-500 focus:ring-blue-500
-                   bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-2.5
+                   bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-2
                    ${disabled ? 'bg-gray-100 dark:bg-gray-600 cursor-not-allowed' : ''}`}
         placeholder={placeholder}
         value={value}

@@ -2,16 +2,30 @@ import apiClient from './axios';
 
 const teacherApi = {
   getTeachers: async () => {
-  try {
-    const response = await apiClient.get('/api/administrator/monitored/get/teachers');
-    const data = response.data?.teachers;
-    
-    return Array.isArray(data) ? data : [];
-  } catch (error) {
-    console.error('Error fetching Teachers:', error.response?.data || error.message);
-    throw error;
-  }
-},
+    try {
+      const response = await apiClient.get('/api/administrator/monitored/get/teachers');
+      const data = response.data?.teachers;
+
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error('Error fetching Teachers:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
+  rollStudents: async (teacherId, studentIds) => {
+    try {
+      const response = await apiClient.post('/api/administrator/student/teacher/store', {
+        teacher_id: teacherId,
+        student_ids: studentIds
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error rolling students:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
 
   storeTeacher: async (formData) => {
     try {

@@ -12,12 +12,23 @@ const studentApi = {
     }
   },
 
+  getStudentsByTeacherId: async (id) => {
+    try {
+      const response = await apiClient.get(`/api/administrator/monitored/get/student/by/teacher/${id}`);
+      const data = response.data?.students;
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      console.error('Error fetching Students:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
   getTeacherStudents: async () => {
     try {
       const response = await apiClient.get('/api/teacher/monitored/get/students');
-      const data = response.data?.students  ;
+      const data = response.data?.students;
       console.log('student API response:', response.data);
-      
+
       return Array.isArray(data) ? data : [];
     } catch (error) {
       console.error('Error fetching Students:', error.response?.data || error.message);

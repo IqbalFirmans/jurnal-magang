@@ -28,7 +28,7 @@ const JournalDetailModal = ({ isOpen, onClose, journal }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="md:col-span-1 mt-6">
+            <div className="md:col-span-1 mt-3">
               <FileUploadDropzone
                 label="Tidak ada gambar" 
                 currentPreviewUrl={journal.thumbnailUrl}
@@ -55,14 +55,6 @@ const JournalDetailModal = ({ isOpen, onClose, journal }) => {
                 label="Tanggal Dibuat"
                 id="detailCreatedAt"
                 value={new Date(journal.createdAt).toLocaleDateString('id-ID', {
-                  year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                })}
-                disabled={true}
-              />
-              <InputField
-                label="Tanggal Diperbarui"
-                id="detailUpdatedAt"
-                value={new Date(journal.updatedAt).toLocaleDateString('id-ID', {
                   year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
                 })}
                 disabled={true}

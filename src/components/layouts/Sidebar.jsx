@@ -37,11 +37,11 @@ const Sidebar = () => {
     <aside className="sticky top-0 h-screen w-64 bg-white dark:bg-gray-800 shadow-md flex flex-col">
       <div className="p-4 text-center border-b border-gray-200 dark:border-gray-700">
         <h1 className="text-2xl font-extrabold text-red-600 dark:text-red-400">
-          Admin Panel
+          Jurnal Sekolah
         </h1>
         {user && (
           <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
-            Masuk sebagai: <span className="font-semibold">{user.name}</span> (<span className="capitalize">{userRole}</span>)
+            Masuk sebagai: <span className="font-semibold">{user.name}</span>
           </p>
         )}
       </div>

@@ -1,4 +1,3 @@
-// AdminStudentView.jsx
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import StudentTable from '../../components/students/StudentTable';
 import StudentFormModal from '../../components/students/StudentFormModal';
@@ -207,26 +206,30 @@ const AdminStudentView = () => {
                         onEdit={handleEditStudent}
                         onViewDetail={handleViewDetail}
                         onDelete={handleDeleteClick}
+                        startIndex={(currentPage - 1) * itemsPerPage}
                     />
-                    <div className="flex justify-end mt-4 gap-2">
-                        <button
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(p => p - 1)}
-                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                        >
-                            Prev
-                        </button>
-                        <span className="px-4 py-2 text-gray-700 dark:text-gray-200">
-                            Page {currentPage} of {Math.ceil(filteredStudents.length / itemsPerPage)}
-                        </span>
-                        <button
-                            disabled={currentPage >= Math.ceil(filteredStudents.length / itemsPerPage)}
-                            onClick={() => setCurrentPage(p => p + 1)}
-                            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
-                        >
-                            Next
-                        </button>
-                    </div>
+
+                    {filteredStudents.length > itemsPerPage && (
+                        <div className="flex justify-end mt-4 gap-2">
+                            <button
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(p => p - 1)}
+                                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                            >
+                                Prev
+                            </button>
+                            <span className="px-4 py-2 text-gray-700 dark:text-gray-200">
+                                Page {currentPage} of {Math.ceil(filteredStudents.length / itemsPerPage)}
+                            </span>
+                            <button
+                                disabled={currentPage >= Math.ceil(filteredStudents.length / itemsPerPage)}
+                                onClick={() => setCurrentPage(p => p + 1)}
+                                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </>
             )}
 

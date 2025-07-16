@@ -119,6 +119,7 @@ const TeacherStudentView = () => {
                         onEdit={null}
                         onViewDetail={handleViewDetail}
                         onDelete={null}
+                        startIndex={(currentPage - 1) * itemsPerPage}
                     />
 
                     {filteredStudents.length > itemsPerPage && (

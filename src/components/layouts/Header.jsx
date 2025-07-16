@@ -1,12 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useAuthStore } from '../../store/authStore'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useAuthStore } from '../../store/authStore';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const user = useAuthStore((state) => state.user); 
+  const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
+
+  const mapRole = (role) => {
+    switch (role) {
+      case 'admin':
+        return 'Admin';
+      case 'teacher':
+        return 'Guru';
+      case 'student':
+        return 'Siswa';
+      default:
+        return role;
+    }
+  };
+
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -34,9 +48,9 @@ const Header = () => {
   }, []);
 
   const handleLogout = useCallback(() => {
-    
-      logout(); 
-      navigate('/login', { replace: true });
+
+    logout();
+    navigate('/login', { replace: true });
   }, [logout, navigate]);
 
   return (
@@ -49,7 +63,7 @@ const Header = () => {
         </button> */}
 
         <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
-          Dashboard Admin
+         Dashboard {mapRole(user?.role)}
         </div>
 
         <div className="flex items-center space-x-4">

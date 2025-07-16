@@ -23,7 +23,7 @@ const SelectField = ({
         id={id}
         value={value}
         onChange={onChange}
-        className={`block w-full p-2.5 rounded-md border ${
+        className={`block w-full p-2 rounded-md border ${
           hasError ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
         } focus:outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100`}
       >
